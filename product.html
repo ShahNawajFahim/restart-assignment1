@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Products | SwiftCart</title>
+
+  <link rel="stylesheet" href="style/style.css" />
+
+  
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+
+
+<header>
+  <div class="navbar justify-between bg-base-100 shadow px-6">
+    <a href="index.html" class="text-2xl font-bold text-blue-600">
+      SwiftCart
+    </a>
+
+    <ul class="menu menu-horizontal hidden lg:flex">
+      <li><a href="index.html">Home</a></li>
+      <li><a class="font-bold text-blue-600">Products</a></li>
+      <li><a>About</a></li>
+      <li><a>Contact</a></li>
+    </ul>
+
+    <div id="cart-icon"></div>
+  </div>
+</header>
+
+
+<section class="text-center my-8">
+  <h1 class="text-3xl font-bold">Our Products</h1>
+</section>
+
+<section class="w-11/12 mx-auto mb-6">
+  <div id="category-container"
+    class="flex flex-wrap gap-4 justify-center">
+  </div>
+</section>
+
+
+<section class="w-11/12 mx-auto mb-10">
+  <div id="product-container"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  </div>
+</section>
+
+<dialog id="product_modal" class="modal">
+  <div class="modal-box">
+    <div id="modal-content"></div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<script src="script/product.js"></script>
+
+</body>
+</html>
