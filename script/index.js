@@ -10,7 +10,6 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 function updateCartCount() {
   cartIcon.innerHTML = `
     <span class="relative">
-      <i class="fa-solid fa-cart-shopping text-lg"></i>
       <span class="absolute -top-2 -right-3 bg-red-500 text-white text-xs px-2 rounded-full">
         ${cart.length}
       </span>
@@ -48,26 +47,30 @@ function displayProducts(products) {
     div.className = "card bg-base-100 shadow-md";
 
     div.innerHTML = `
-      <figure class="p-5 h-60">
+      <figure class="p-5 h-60 bg-gray-300">
         <img src="${product.image}" class="h-full object-contain" />
       </figure>
       <div class="card-body">
+        <div class="flex justify-between">
+         <span class="text-blue-600 font-semibold badge badge-outline">${product.category}</span>
+        <span class="text-stone-600">⭐ ${product.rating.rate}(${product.rating.count})</span>
+        </div>
+
         <h2 class="card-title text-sm">
           ${product.title.slice(0, 40)}...
         </h2>
-        <p class="text-blue-600 font-bold">$${product.price}</p>
-        <p class="badge badge-outline">${product.category}</p>
-        <p>⭐ ${product.rating.rate}</p>
+        <p class=" font-bold">$${product.price}</p>
+       
 
         <div class="card-actions justify-between mt-3">
           <button onclick="showDetails(${product.id})"
-            class="btn btn-sm btn-outline btn-primary">
-            Details
+            class="btn  btn-outline ">
+           👁 Details
           </button>
 
           <button onclick="addToCart(${product.id})"
-            class="btn btn-sm btn-primary">
-            Add to Cart
+            class="btn  btn-primary">
+           🛒 Add   
           </button>
         </div>
       </div>
@@ -107,36 +110,6 @@ async function addToCart(id) {
   updateCartCount();
 }
 
-async function loadCategories() {
-  const res = await fetch(`${BASE_URL}/categories`);
-  const categories = await res.json();
-
-  const categorySection = document.createElement("div");
-  categorySection.className =
-    "flex flex-wrap gap-4 justify-center my-6";
-
-  categories.forEach((category) => {
-    const btn = document.createElement("button");
-    btn.className = "btn btn-outline category-btn";
-    btn.innerText = category;
-
-    btn.addEventListener("click", () => {
-      document
-        .querySelectorAll(".category-btn")
-        .forEach((b) => b.classList.remove("btn-primary"));
-
-      btn.classList.add("btn-primary");
-      loadProductsByCategory(category);
-    });
-
-    categorySection.appendChild(btn);
-  });
-
-  cardContainer.parentElement.insertBefore(
-    categorySection,
-    cardContainer
-  );
-}
 
 
 async function loadProductsByCategory(category) {
@@ -148,4 +121,4 @@ async function loadProductsByCategory(category) {
 
 
 loadTrendingProducts();
-loadCategories();
+

@@ -46,35 +46,36 @@ function displayProducts(products) {
     const div = document.createElement("div");
     div.className = "card bg-base-100 shadow";
 
-    div.innerHTML = `
-      <figure class="p-5 h-60">
-        <img src="${product.image}" class="h-full object-contain"/>
+   div.innerHTML = `
+      <figure class="p-5 h-60 bg-gray-300">
+        <img src="${product.image}" class="h-full object-contain" />
       </figure>
-
       <div class="card-body">
+        <div class="flex justify-between">
+         <span class="text-blue-600 font-semibold badge badge-outline">${product.category}</span>
+        <span class="text-stone-600">⭐ ${product.rating.rate}(${product.rating.count})</span>
+        </div>
+
         <h2 class="card-title text-sm">
           ${product.title.slice(0, 40)}...
         </h2>
-
-        <p class="font-bold text-blue-600">$${product.price}</p>
-
-        <span class="badge badge-outline">${product.category}</span>
-
-        <p>⭐ ${product.rating.rate}</p>
+        <p class=" font-bold">$${product.price}</p>
+       
 
         <div class="card-actions justify-between mt-3">
           <button onclick="showDetails(${product.id})"
-            class="btn btn-sm btn-outline btn-primary">
-            Details
+            class="btn  btn-outline ">
+           👁 Details
           </button>
 
           <button onclick="addToCart(${product.id})"
-            class="btn btn-sm btn-primary">
-            Add to Cart
+            class="btn  btn-primary">
+           🛒 Add   
           </button>
         </div>
       </div>
     `;
+
 
     productContainer.appendChild(div);
   });
@@ -85,9 +86,29 @@ async function loadCategories() {
   const res = await fetch(`${BASE_URL}/categories`);
   const categories = await res.json();
 
+
+   const allBtn = document.createElement("button");
+  allBtn.className = "btn btn-primary btn-outline category-btn";
+  allBtn.innerText = "All Products";
+
+  allBtn.addEventListener("click", () => {
+    document
+      .querySelectorAll(".category-btn")
+      .forEach((b) => b.classList.remove("btn-primary"));
+
+    allBtn.classList.add("btn-primary");
+
+    showLoader();
+    fetch(BASE_URL)
+      .then(res => res.json())
+      .then(data => displayProducts(data));
+  });
+
+  categoryContainer.appendChild(allBtn);
+
   categories.forEach((category) => {
     const btn = document.createElement("button");
-    btn.className = "btn btn-outline category-btn";
+    btn.className = "btn btn-outline btn-primary category-btn";
     btn.innerText = category;
 
     btn.addEventListener("click", () => {
